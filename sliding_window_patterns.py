@@ -25,3 +25,24 @@ def min_subarray_len(nums, target):
     return 0
     
   return min_length
+
+# Caterpillar crawl solution
+# note - below works only for positive numbers
+def count_sub_arrays(nums, target):
+  count = 0
+  window_sum = 0
+  start = 0
+  for end in range(0, len(nums)):
+    window_sum += nums[end]
+    while window_sum > target:
+      window_sum -= nums[start]
+      start += 1
+    if window_sum == target:
+      count += 1
+  return count
+
+# some problems to practise for above approach
+#
+# - Number of Subarrays with Sum Equals K
+# - Longest Subarray with Sum Less than or Equal to K
+# - Subarray Product Less than K

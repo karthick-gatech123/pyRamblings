@@ -1,0 +1,51 @@
+#  simulate a common bus system for 4 registers named A,B,C and D 
+# In this setting, multiplexers act as the gatekeepers deciding which
+# register gets to put its data onto the shared bus based on selection lines
+
+class BusSystem:
+    def __init__(self, a, b, c, d):
+        # Initialize 4 registers with data
+        self.registers = {
+            "00": a,  # Register A
+            "01": b,  # Register B
+            "10": c,  # Register C
+            "11": d   # Register D
+        }
+        self.bus_line = None
+
+    def multiplexer_logic(self, s1, s0):
+        """
+        Simulates the 4x1 MUX logic.
+        The selection lines s1 and s0 determine which register 
+        is connected to the common bus.
+        """
+        selection = f"{s1}{s0}"
+        
+        # The MUX selects the data from the corresponding register
+        self.bus_line = self.registers.get(selection)
+        
+        print(f"Selection Lines: S1={s1}, S0={s0}")
+        print(f"Register {chr(65 + int(selection, 2))} selected.")
+        print(f"Common Bus Data: {self.bus_line}\n")
+        return self.bus_line
+
+
+reg_A = "1010"
+reg_B = "1100"
+reg_C = "0011"
+reg_D = "1111"
+
+# 2. Initialize the Bus System
+system = BusSystem(reg_A, reg_B, reg_C, reg_D)
+
+print("--- Common Bus System Simulation ---\n")
+
+# 3. Simulate selecting different registers
+# Select Register A (00)
+system.multiplexer_logic(0, 0)
+
+# Select Register C (10)
+system.multiplexer_logic(1, 0)
+
+# Select Register D (11)
+system.multiplexer_logic(1, 1)
